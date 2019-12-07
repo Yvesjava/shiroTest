@@ -1,10 +1,12 @@
 package com.imcode.shiro.test;
 
 
+import com.imcode.shiro.util.ShiroUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.Subject;
 import org.junit.Test;
@@ -17,7 +19,7 @@ public class ShiroTest {
 		DefaultSecurityManager securityManager = new DefaultSecurityManager();
 
 		// 2.设置用户的权限信息到安全管理器
-		IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
+		Realm iniRealm = new IniRealm("classpath:shiro.ini");
 		securityManager.setRealm(iniRealm);
 
 		// 3.使用SecurityUtils将securityManager设置到运行环境中
@@ -48,6 +50,16 @@ public class ShiroTest {
 		subject.logout();
 
 		System.out.println(subject.isAuthenticated());
+	}
+
+	@Test
+	public void test2(){
+		// 创建一个subject对象
+		Subject qjy = ShiroUtil.login("qjy", "0");
+
+		// 授权
+		System.out.println("是否拥有角色:admin------>" + qjy.hasRole("admin"));
 
 	}
+
 }
